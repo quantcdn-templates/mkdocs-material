@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pipenv:
+  build-deploy:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -20,17 +20,10 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          cache: 'pip'
 
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pipenv
-          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pipenv-
-
-      - run: python3 -m pip install --upgrade pip pipenv
-      - run: pipenv sync --dev
-      - run: pipenv run mkdocs build --config-file ./mkdocs.yml
+      - run: pip install -r requirements.txt
+      - run: mkdocs build --config-file mkdocs.yml
 
       - name: Deploy updates to QuantCDN
         uses: quantcdn/deploy-action@v2.0.0
@@ -39,7 +32,7 @@ jobs:
           project: "${{ secrets.QUANT_PROJECT_ID }}"
           token: "${{ secrets.QUANT_TOKEN }}"
           endpoint: "${{ secrets.QUANT_ENDPOINT || 'https://api.quantcdn.io' }}"
-          dir: build
+          dir: site
           chunk-size: 20
           skip-purge: true
           revision-log: .quant-revision
