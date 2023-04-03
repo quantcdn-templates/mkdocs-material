@@ -1,0 +1,9 @@
+[{
+    "title": "MkDocs Material",
+    "url": "/deploy/step-one?template=mkdocs-material",
+    "summary": "MkDocs is a fast, simple and downright gorgeous static site generator that's geared towards building project documentation.",
+    "content": "MkDocs Material comes with the popular material theme out of the box for simple, attractive documentation builds.",
+    "image": "https://raw.githubusercontent.com/quantcdn-templates/mkdocs-material/main/quant/screenshot.png",
+    "categories": ["SSG", "Documentation", "Blog"],
+    "tags": ["Markdown", "Python"]
+}]
